@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BioPortal Complete App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .perspective-container { perspective: 1000px; }
+    .logo-reactive { transition: transform 0.1s ease-out; transform-style: preserve-3d; will-change: transform; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col font-sans">
+
+  <header class="p-4 bg-gray-900 border-b border-gray-800 flex justify-between items-center sticky top-0 z-20">
+    <div class="perspective-container">
+      <div id="logo-interactive" class="logo-reactive flex items-center gap-3 bg-gray-950/60 px-3 py-1.5 rounded-xl border border-gray-800/80 cursor-pointer shadow-lg select-none">
+        <svg class="w-7 h-7 fill-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)]" viewBox="0 0 24 24">
+          <path d="M12,11.5 A3,3 0 0,0 9,14.5 A3,3 0 0,0 12,17.5 A3,3 0 0,0 15,14.5 A3,3 0 0,0 12,11.5 Z M3.5,10 A2.5,2.5 0 0,0 1,12.5 A2.5,2.5 0 0,0 3.5,15 A2.5,2.5 0 0,0 6,12.5 A2.5,2.5 0 0,0 3.5,10 Z M20.5,10 A2.5,2.5 0 0,0 18,12.5 A2.5,2.5 0 0,0 20.5,15 A2.5,2.5 0 0,0 23,12.5 A2.5,2.5 0 0,0 20.5,10 Z M7,4.5 A2.5,2.5 0 0,0 4.5,7 A2.5,2.5 0 0,0 7,9.5 A2.5,2.5 0 0,0 9.5,7 A2.5,2.5 0 0,0 7,4.5 Z M17,4.5 A2.5,2.5 0 0,0 14.5,7 A2.5,2.5 0 0,0 17,9.5 A2.5,2.5 0 0,0 19.5,7 A2.5,2.5 0 0,0 17,4.5 Z" />
+        </svg>
+        <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-200 bg-clip-text text-transparent tracking-wide">BioPortal</h1>
+      </div>
+    </div>
+
+    <span class="text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-3 py-1 rounded-full flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      Sistema Ativo
+    </span>
+  </header>
+
+  <nav class="bg-gray-900 border-b border-gray-800 px-4 flex gap-2 overflow-x-auto text-xs font-semibold">
+    <button onclick="trocarAba('aba-chat')" id="btn-chat" class="tab-btn px-4 py-3 text-emerald-400 border-b-2 border-emerald-400 flex items-center gap-2">
+      <i class="fa-solid fa-robot"></i> Gabriel AI
+    </button>
+    <button onclick="trocarAba('aba-noticias')" id="btn-noticias" class="tab-btn px-4 py-3 text-gray-400 border-b-2 border-transparent hover:text-gray-200 flex items-center gap-2">
+      <i class="fa-solid fa-newspaper"></i> Notícias
+    </button>
+    <button onclick="trocarAba('aba-calculadora')" id="btn-calculadora" class="tab-btn px-4 py-3 text-gray-400 border-b-2 border-transparent hover:text-gray-200 flex items-center gap-2">
+      <i class="fa-solid fa-calculator"></i> Calc. Ração
+    </button>
+    <button onclick="trocarAba('aba-socorros')" id="btn-socorros" class="tab-btn px-4 py-3 text-gray-400 border-b-2 border-transparent hover:text-gray-200 flex items-center gap-2">
+      <i class="fa-solid fa-kit-medical"></i> Emergências
+    </button>
+    <button onclick="trocarAba('aba-enciclopedia')" id="btn-enciclopedia" class="tab-btn px-4 py-3 text-gray-400 border-b-2 border-transparent hover:text-gray-200 flex items-center gap-2">
+      <i class="fa-solid fa-book-bookmark"></i> Enciclopédia
+    </button>
+  </nav>
+
+  <main class="flex-1 p-4 max-w-3xl mx-auto w-full space-y-4">
+
+    <!-- Aba Chat -->
+    <section id="aba-chat" class="space-y-4">
+      <div class="grid grid-cols-4 gap-2">
+        <button onclick="enviarPergunta('cachorro')" class="bg-gray-900 hover:bg-gray-800 border border-gray-800 p-3 rounded-xl text-left transition group">
+          <svg class="w-5 h-5 fill-emerald-400 mb-1 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+            <path d="M19,3L15,7H9L5,3L3,5L5,10V21H9V15H15V21H19V10L21,5L19,3Z"/>
+          </svg>
+          <div class="text-xs font-bold">Domésticos</div>
+          <div class="text-[10px] text-gray-400">Cães e Gatos</div>
+        </button>
+
+        <button onclick="enviarPergunta('cavalo')" class="bg-gray-900 hover:bg-gray-800 border border-gray-800 p-3 rounded-xl text-left transition group">
+          <svg class="w-5 h-5 fill-emerald-400 mb-1 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+            <path d="M21,3C21,3 19.4,4 16.5,4C13.6,4 12,2 9.5,2C7,2 4,4.5 4,8C4,10.5 5.5,12 5.5,12L3,22H7L9,15L12,17V22H16V14L19,9C19,9 21,7.5 21,5.5C21,3.5 21,3 21,3Z"/>
+          </svg>
+          <div class="text-xs font-bold">Eqüinos</div>
+          <div class="text-[10px] text-gray-400">Cavalos</div>
+        </button>
+
+        <button onclick="enviarPergunta('leão')" class="bg-gray-900 hover:bg-gray-800 border border-gray-800 p-3 rounded-xl text-left transition group">
+          <svg class="w-5 h-5 fill-emerald-400 mb-1 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+            <path d="M12,2C8,2 5,4 4,7C3,10 4,13 5,14C4,16 5,19 7,20C8.5,20.8 10,20.9 11,20.5V22H13V20.5C14,20.9 15.5,20.8 17,20C19,19 20,16 19,14C20,13 21,10 20,7C19,4 16,2 12,2Z"/>
+          </svg>
+          <div class="text-xs font-bold">Selvagens</div>
+          <div class="text-[10px] text-gray-400">Leão, Onça e mais</div>
+        </button>
+
+        <button onclick="enviarPergunta('pássaro')" class="bg-gray-900 hover:bg-gray-800 border border-gray-800 p-3 rounded-xl text-left transition group">
+          <svg class="w-5 h-5 fill-emerald-400 mb-1 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+            <path d="M20.5,4.5C18,4 14,6 12,9C9.5,7.5 6.5,7 3,8.5C6,11 8,13 9.5,15.5C7,17 4.5,17 2,16.5C5,19.5 9,20.5 13,19C16.5,17.7 19.5,14 21,9.5C21.5,8 21.5,5.5 20.5,4.5Z"/>
+          </svg>
+          <div class="text-xs font-bold">Outros</div>
+          <div class="text-[10px] text-gray-400">Aves e Répteis</div>
+        </button>
+      </div>
+
+      <div class="bg-gray-900 rounded-xl border border-gray-800 flex flex-col h-[400px]">
+        <div id="chat-box" class="flex-1 overflow-y-auto p-4 space-y-3 text-sm">
+          <div class="bg-gray-800 p-3 rounded-lg max-w-[85%] border border-gray-700">
+            Olá! Sou o <strong>Gabriel</strong>. Pesquise sobre qualquer animal no campo abaixo!
+          </div>
+        </div>
+        <form id="chat-form" class="p-3 border-t border-gray-800 flex gap-2 bg-gray-900/50 rounded-b-xl">
+          <input type="text" id="user-input" placeholder="Digite o nome de um animal (ex: cachorro, cavalo, leão)..." class="flex-1 bg-gray-950 border border-gray-800 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-emerald-500">
+          <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Aba Portal de Notícias -->
+    <section id="aba-noticias" class="hidden space-y-4">
+      <div class="flex justify-between items-center bg-gray-900 p-4 rounded-xl border border-gray-800">
+        <div>
+          <h2 class="font-bold text-lg text-emerald-400 flex items-center gap-2">
+            <i class="fa-solid fa-newspaper"></i> Notícias do Mundo Animal
+          </h2>
+          <p class="text-xs text-gray-400">Atualizações em tempo real vindas dos principais portais.</p>
+        </div>
+        <button onclick="carregarNoticias()" class="bg-gray-800 hover:bg-gray-700 text-emerald-400 border border-gray-700 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition">
+          <i class="fa-solid fa-rotate-right"></i> Atualizar
+        </button>
+      </div>
+
+      <div id="container-noticias" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Notícias serão inseridas dinamicamente via JS -->
+      </div>
+    </section>
+
+    <!-- Aba Calculadora -->
+    <section id="aba-calculadora" class="hidden bg-gray-900 p-5 rounded-xl border border-gray-800 space-y-4">
+      <div>
+        <h2 class="font-bold text-lg text-emerald-400 flex items-center gap-2">
+          <i class="fa-solid fa-scale-balanced"></i> Calculadora Nutricional de Pets
+        </h2>
+        <p class="text-xs text-gray-400">Calcule a gramatura ideal de ração diária para o seu cão ou gato.</p>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="text-xs font-semibold text-gray-300 block mb-1">Espécie do Pet:</label>
+          <select id="calc-especie" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2 text-sm">
+            <option value="cao">Cão</option>
+            <option value="gato">Gato</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-xs font-semibold text-gray-300 block mb-1">Peso Atual (kg):</label>
+          <input type="number" id="calc-peso" placeholder="Ex: 8.5" step="0.1" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2 text-sm">
+        </div>
+
+        <div>
+          <label class="text-xs font-semibold text-gray-300 block mb-1">Fase de Vida:</label>
+          <select id="calc-fase" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2 text-sm">
+            <option value="filhote">Filhote (até 1 ano)</option>
+            <option value="adulto">Adulto</option>
+            <option value="senior">Sênior (7+ anos)</option>
+          </select>
+        </div>
+
+        <button onclick="processarCalculoRacao()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg font-medium text-sm transition">
+          Calcular Dose Diária
+        </button>
+
+        <div id="resultado-calculadora" class="hidden mt-4 p-4 bg-gray-950 rounded-lg border border-emerald-800 text-emerald-300 text-sm"></div>
+      </div>
+    </section>
+
+    <!-- Aba Emergências -->
+    <section id="aba-socorros" class="hidden space-y-3">
+      <div class="bg-red-950/40 border border-red-800/50 p-4 rounded-xl">
+        <h2 class="font-bold text-red-400 flex items-center gap-2">
+          <i class="fa-solid fa-triangle-exclamation"></i> Primeiros Socorros Animais
+        </h2>
+        <p class="text-xs text-red-200 mt-1">Guia rápido de emergência. Procure sempre um médico veterinário imediatamente!</p>
+      </div>
+
+      <div class="space-y-2">
+        <details class="bg-gray-900 border border-gray-800 rounded-lg p-3 group">
+          <summary class="font-semibold text-sm cursor-pointer text-emerald-400 flex justify-between items-center">
+            <span>Intoxicação ou Envenenamento</span>
+            <i class="fa-solid fa-chevron-down text-xs group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-xs text-gray-300 mt-2 leading-relaxed">
+            NUNCA force o animal a vomitar sem orientação médica. Remova o produto do alcance, identifique o que foi ingerido e leve a embalagem/rótulo imediatamente ao veterinário.
+          </p>
+        </details>
+
+        <details class="bg-gray-900 border border-gray-800 rounded-lg p-3 group">
+          <summary class="font-semibold text-sm cursor-pointer text-emerald-400 flex justify-between items-center">
+            <span>Picadas de Insetos / Escorpião</span>
+            <i class="fa-solid fa-chevron-down text-xs group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-xs text-gray-300 mt-2 leading-relaxed">
+            Aplique uma compressa fria no local atingido para diminuir o inchaço e a dor. Mantenha o pet calmo para evitar que o veneno se espalhe rapidamente.
+          </p>
+        </details>
+
+        <details class="bg-gray-900 border border-gray-800 rounded-lg p-3 group">
+          <summary class="font-semibold text-sm cursor-pointer text-emerald-400 flex justify-between items-center">
+            <span>Cortes e Ferimentos com Sangramento</span>
+            <i class="fa-solid fa-chevron-down text-xs group-open:rotate-180 transition"></i>
+          </summary>
+          <p class="text-xs text-gray-300 mt-2 leading-relaxed">
+            Pressione o local do sangramento com um pano limpo ou gaze por 3 a 5 minutos sem soltar. Não aplique torniquetes apertados sem treinamento prévio.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Aba Enciclopédia -->
+    <section id="aba-enciclopedia" class="hidden space-y-3">
+      <div class="relative">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+        <input 
+          type="text" 
+          id="busca-enciclopedia" 
+          oninput="carregarEnciclopedia()" 
+          placeholder="Buscar animal na enciclopédia..." 
+          class="w-full bg-gray-900 border border-gray-800 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:border-emerald-500 text-gray-100 placeholder-gray-500"
+        />
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="lista-enciclopedia"></div>
+    </section>
+
+  </main>
+
+  <script>
+    // Lógica do Logo Reativo 3D
+    const logoEl = document.getElementById('logo-interactive');
+    if (logoEl) {
+      document.addEventListener('mousemove', (e) => {
+        const rect = logoEl.getBoundingClientRect();
+        const logoCenterX = rect.left + rect.width / 2;
+        const logoCenterY = rect.top + rect.height / 2;
+
+        const deltaX = (e.clientX - logoCenterX) / 20;
+        const deltaY = (e.clientY - logoCenterY) / 20;
+
+        const limit = 20;
+        const rotateX = Math.max(-limit, Math.min(limit, -deltaY));
+        const rotateY = Math.max(-limit, Math.min(limit, deltaX));
+
+        logoEl.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+      });
+
+      document.addEventListener('mouseleave', () => {
+        logoEl.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+      });
+    }
+
+    // Banco de Dados Local
+    const bancoAnimais = {
+      'cachorro': 'Os cães foram os primeiros animais a serem domesticados. Necessitam de rotina de passeios, alimentação equilibrada e vacinas em dia (V10 e Raiva).',
+      'cavalo': 'Os cavalos são mamíferos herbívoros de grande porte da família Equidae. São conhecidos por sua velocidade, força e pelo papel histórico no transporte e na agricultura.',
+      'gato': 'Os gatos são carnívoros estritos e independentes. Precisam de caixas de areia limpas, arranhadores e pontos altos na casa.',
+      'leão': 'O leão é o rei da selva, vive nas savanas africanas e é o único felino social que caça em bandos.',
+      'onça': 'A onça-pintada é o maior felino das Américas, com uma das mordidas mais fortes do reino animal.',
+      'tubarão': 'Os tubarões são peixes cartilaginosos essenciais para o equilíbrio dos oceanos.',
+      'pássaro': 'As aves possuem ossos pneumáticos que facilitam o voo. Necessitam de enriquecimento ambiental em cativeiro legal.',
+      'cobra': 'As cobras ajudam no controle de pragas como roedores. Nem todas são peçonhentas, mas requerem cuidado.',
+      'elefante': 'Maior mamífero terrestre vivo. Possui tromba extremamente versátil com mais de 40 mil músculos.',
+      'lobo': 'Ancestral dos cães domésticos. Vivem em matilhas altamente hierarquizadas e se comunicam por uivos.',
+      'urso': 'Mamíferos omnívoros de grande porte com excelente olfato. Algumas espécies hibernam durante o inverno.',
+      'gorila': 'Maior dos primatas vivos, compartilha cerca de 98% do DNA com os seres humanos.',
+      'girafa': 'Animal mais alto do mundo. Suas manchas são únicas para cada indivíduo, como impressões digitais.',
+      'hipopótamo': 'Apesar de herbívoros, são extremamente territoriais e um dos animais mais perigosos da África.',
+      'jacaré': 'Réptil semi-aquático comum nas Américas, desempenha papel essencial no topo da cadeia alimentar dos rios.',
+      'baleia': 'Maior mamífero do planeta. As baleias-azuis podem atingir até 30 metros de comprimento.',
+      'golfinho': 'Mamíferos marinhos extremamente inteligentes, conhecidos pela capacidade de comunicação por ecolocalização.',
+      'pinguim': 'Aves marinhas não voadoras perfeitamente adaptadas à natação e ao frio extremo.',
+      'coruja': 'Aves de rapina noturnas com audição apurada e rotação de cabeça de até 270 graus.',
+      'águia': 'Aves predadoras no topo da cadeia alimentar, com visão extremamente aguçada.',
+      'tartaruga': 'Répteis caracterizados por suas carapaças de proteção. Podem viver mais de 100 anos.'
+    };
+
+    // Função de Integração com API de Notícias Reais
+    async function carregarNoticias() {
+      const container = document.getElementById('container-noticias');
+      
+      // Feedback visual de carregamento
+      container.innerHTML = `
+        <div class="col-span-full text-center py-12 space-y-3">
+          <i class="fa-solid fa-spinner animate-spin text-3xl text-emerald-400"></i>
+          <p class="text-xs text-gray-400">Buscando notícias recentes sobre o mundo animal...</p>
+        </div>
+      `;
+
+      try {
+        // Conversor RSS-to-JSON público consultando as últimas notícias sobre animais do Google News BR
+        const feedUrl = encodeURIComponent('https://news.google.com/rss/search?q=animais+OR+fauna+OR+veterinaria&hl=pt-BR&gl=BR&ceid=BR:pt-419');
+        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${feedUrl}`);
+        const data = await response.json();
+
+        if (data.status !== 'ok' || !data.items || data.items.length === 0) {
+          throw new Error('Nenhuma notícia encontrada.');
+        }
+
+        container.innerHTML = '';
+
+        data.items.slice(0, 6).forEach(item => {
+          const dataPublicacao = new Date(item.pubDate).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+          });
+
+          const div = document.createElement('article');
+          div.className = 'bg-gray-900 border border-gray-800 rounded-xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition shadow-sm hover:shadow-emerald-950/20';
+          div.innerHTML = `
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-[10px] text-gray-400">
+                <span class="bg-emerald-950 text-emerald-400 border border-emerald-800/80 px-2 py-0.5 rounded font-medium">
+                  ${item.author || 'Fonte Externa'}
+                </span>
+                <span><i class="fa-regular fa-clock mr-1"></i>${dataPublicacao}</span>
+              </div>
+              <h3 class="font-bold text-sm text-gray-100 hover:text-emerald-400 transition leading-snug">
+                <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a>
+              </h3>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-800/60 flex justify-end">
+              <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="text-xs text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+                Ler matéria completa <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+
+      } catch (error) {
+        container.innerHTML = `
+          <div class="col-span-full p-6 text-center text-xs bg-red-950/30 border border-red-800/50 rounded-xl text-red-300">
+            <i class="fa-solid fa-circle-exclamation text-lg mb-2 block"></i>
+            Não foi possível carregar as notícias em tempo real no momento. Verifique sua conexão e tente novamente.
+          </div>
+        `;
+      }
+    }
+
+    // Troca de Abas
+    function trocarAba(idAba) {
+      document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(idAba).classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('text-emerald-400', 'border-emerald-400');
+        btn.classList.add('text-gray-400', 'border-transparent');         btn.classList.add('text-gray-400', 'border-transparent');
+      });
+
+      const botao = document.getElementById(
+        'btn-' + idAba.replace('aba-', '')
+      );
+
+      if (botao) {
+        botao.classList.remove('text-gray-400', 'border-transparent');
+        botao.classList.add('text-emerald-400', 'border-emerald-400');
+      }
+    }
+
+    function enviarPergunta(pergunta) {
+      const entrada = document.getElementById('user-input');
+      const chatBox = document.getElementById('chat-box');
+      const texto = pergunta || entrada.value.trim();
+
+      if (!texto) return;
+
+      const resposta = bancoAnimais[texto.toLowerCase()] ||
+        'Não encontrei informações sobre esse animal.';
+
+      chatBox.innerHTML += `
+        <div class="bg-emerald-900/40 p-3 rounded-lg ml-auto max-w-[85%]">
+          ${texto}
+        </div>
+        <div class="bg-gray-800 p-3 rounded-lg max-w-[85%]">
+          ${resposta}
+        </div>
+      `;
+
+      entrada.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function processarCalculoRacao() {
+      const peso = Number(document.getElementById('calc-peso').value);
+      const fase = document.getElementById('calc-fase').value;
+      const resultado = document.getElementById('resultado-calculadora');
+
+      if (!peso || peso <= 0) {
+        resultado.textContent = 'Informe um peso válido.';
+        resultado.classList.remove('hidden');
+        return;
+      }
+
+      let dose = peso * 25;
+      if (fase === 'filhote') dose *= 1.5;
+      if (fase === 'senior') dose *= 0.8;
+
+      resultado.textContent = `Dose estimada: ${Math.round(dose)} g por dia. Consulte um veterinário.`;
+      resultado.classList.remove('hidden');
+    }
+
+    function carregarEnciclopedia() {
+      const lista = document.getElementById('lista-enciclopedia');
+      const busca = document.getElementById('busca-enciclopedia').value.toLowerCase();
+
+      lista.innerHTML = '';
+
+      Object.entries(bancoAnimais)
+        .filter(([animal]) => animal.includes(busca))
+        .forEach(([animal, descricao]) => {
+          lista.innerHTML += `
+            <article class="bg-gray-900 border border-gray-800 rounded-xl p-4">
+              <h3 class="font-bold text-emerald-400 capitalize">${animal}</h3>
+              <p class="text-xs text-gray-300 mt-2">${descricao}</p>
+            </article>
+          `;
+        });
+    }
+
+    document.getElementById('chat-form').addEventListener('submit', event => {
+      event.preventDefault();
+      enviarPergunta();
+    });
+
+    carregarEnciclopedia();
+  </script>
+</body>
+</html>
